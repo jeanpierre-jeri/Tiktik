@@ -53,7 +53,7 @@ export function Sidebar() {
                 >
                   Log in
                 </button> */}
-                <GoogleLogin theme="outline" onSuccess={() => {}} onError={() => {}} />
+                {/* <GoogleLogin theme="outline" onSuccess={() => {}} onError={() => {}} /> */}
               </div>
             </div>
           )}
