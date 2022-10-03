@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['jeanpierrejeri.vercel.app']
+    domains: ['jeanpierrejeri.vercel.app', 'lh3.googleusercontent.com']
   }
 }
 

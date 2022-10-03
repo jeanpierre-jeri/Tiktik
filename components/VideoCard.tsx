@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useRef } from 'react'
+import { FC, useState, useRef } from 'react'
 
 import Image from 'next/future/image'
 import Link from 'next/link'
@@ -39,15 +39,17 @@ export const VideoCard: FC<VideoCardProps> = ({ post }) => {
         <div className="flex gap-3 p-2 font-semibold rounded cursor-pointer">
           <div className="w-10 h-10 md:w-16 md:h-16">
             <Link href="/">
-              <Image
-                width={62}
-                height={62}
-                className="rounded-full"
-                src={post.postedBy.image}
-                alt="Profile photo"
-                sizes="100vw"
-                style={css}
-              />
+              <a>
+                <Image
+                  width={62}
+                  height={62}
+                  className="rounded-full"
+                  src={post.postedBy.image}
+                  alt="Profile photo"
+                  sizes="100vw"
+                  style={css}
+                />
+              </a>
             </Link>
           </div>
           <div>

@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+
 import Image from 'next/future/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -8,13 +10,22 @@ import { BiSearch } from 'react-icons/bi'
 import { IoMdAdd } from 'react-icons/io'
 
 import logo from '../utils/tiktik-logo.png'
-import { createOrGetUser } from '../utils/index'
+import { createOrGetUser, User } from '../utils/index'
 
 import useAuthStore from '../store/authStore'
 
 export function Navbar() {
-  const user = false
-  const { userProfile, addUser } = useAuthStore()
+  const [user, setUser] = useState<User | null>(null)
+  const { userProfile, addUser, removeUser } = useAuthStore()
+
+  useEffect(() => {
+    setUser(userProfile)
+  }, [userProfile])
+
+  const logOut = () => {
+    googleLogout()
+    removeUser()
+  }
 
   return (
     <div className="flex items-center justify-between w-full px-4 py-2 border-b-2 border-gray-200">
@@ -33,9 +44,39 @@ export function Navbar() {
       <div>SEARCH</div>
       <div>
         {user ? (
-          <div>Logged in</div>
+          <div className="flex gap-5 md:gap-10">
+            <Link href="/upload">
+              <button
+                type="button"
+                className="flex items-center gap-2 px-2 text-base font-semibold border-2 md:px-4"
+              >
+                <IoMdAdd className="text-xl" /> <span className="hidden md:block">Upload</span>
+              </button>
+            </Link>
+
+            {user.image && (
+              <Link href="/">
+                <a>
+                  <Image
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                    src={user.image}
+                    alt="Profile photo"
+                  />
+                </a>
+              </Link>
+            )}
+
+            <button type="button" className="px-2" onClick={logOut}>
+              <AiOutlineLogout color="red" fontSize={21} />
+            </button>
+          </div>
         ) : (
-          <GoogleLogin onSuccess={createOrGetUser} onError={() => console.log('Error ')} />
+          <GoogleLogin
+            onSuccess={(response) => createOrGetUser(response, addUser)}
+            onError={() => console.log('Error ')}
+          />
         )}
       </div>
     </div>
